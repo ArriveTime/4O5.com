@@ -107,18 +107,18 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for AI, sports, tickets, dining, and entertainment.
         </p>
 
-        <!-- Live Internet AI Search Bar Component -->
+        <!-- Live AI Search Bar Component -->
         <div class="mt-10 max-w-2xl mx-auto">
             <form id="internetSearchForm" onsubmit="executeInternetSearch(event)" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="sparkles" class="w-5 h-5 text-blue-400 animate-pulse"></i>
-                    <input type="text" id="directorySearch" placeholder="Search entire internet & LA area (e.g. 'dodgers tickets', 'best steak LA')..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <input type="text" id="directorySearch" placeholder="Ask AI Search (e.g. 'dodgers tickets', 'best steak LA')..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
                 <button type="submit" id="searchBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
-                    Live Web Search
+                    Live AI Search
                 </button>
             </form>
-            <p id="searchStatus" class="text-xs text-slate-500 mt-2">Autonomous AI Gateway: Dual local filtering + Live Web Query Active</p>
+            <p id="searchStatus" class="text-xs text-slate-500 mt-2">Autonomous AI Gateway: Local filter + Live AI Search Active</p>
         </div>
     </section>
 
@@ -378,7 +378,7 @@
             setInterval(updateLATime, 1000);
         }
 
-        // Dual AI Engine: Instant Local Filter + Live Web Search Query
+        // Dual AI Engine: Instant Local Filter + Live AI Search Query
         function initAISearchEngine() {
             const searchInput = document.getElementById('directorySearch');
             const searchForm = document.getElementById('internetSearchForm');
@@ -435,10 +435,10 @@
 
                 if (statusEl) {
                     if (rawQuery === '') {
-                        statusEl.innerText = "Autonomous AI Gateway: Dual local filtering + Live Web Query Active";
+                        statusEl.innerText = "Autonomous AI Gateway: Local filter + Live AI Search Active";
                         statusEl.className = "text-xs text-slate-500 mt-2";
                     } else {
-                        statusEl.innerText = `AI Semantic Match: Found ${matchCount} local hub result(s). Press Enter to search the entire internet.`;
+                        statusEl.innerText = `AI Semantic Match: Found ${matchCount} local hub result(s). Press Enter for Live AI Search.`;
                         statusEl.className = "text-xs text-blue-400 mt-2 font-medium";
                     }
                 }
@@ -449,14 +449,13 @@
                 searchInput.addEventListener('keyup', performLocalFilter);
             }
 
-            // On submit (pressing Enter or clicking Live Web Search), query the entire internet via Google
+            // On submit, query the broader internet with Live AI Search
             if (searchForm) {
                 searchForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     if (!searchInput) return;
                     const query = searchInput.value.trim();
                     if (query !== '') {
-                        // Open live internet search results in a new tab targeting Los Angeles / general web
                         const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query + ' Los Angeles')}`;
                         window.open(searchUrl, '_blank');
                     }
@@ -483,7 +482,7 @@
 
             const statusEl = document.getElementById('searchStatus');
             if (statusEl) {
-                statusEl.innerText = "Autonomous AI Gateway: Dual local filtering + Live Web Query Active";
+                statusEl.innerText = "Autonomous AI Gateway: Local filter + Live AI Search Active";
                 statusEl.className = "text-xs text-slate-500 mt-2";
             }
 
