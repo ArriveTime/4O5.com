@@ -262,7 +262,7 @@
         </div>
     </footer>
 
-    <!-- Bulletproof Search Script wrapped in DOMContentLoaded -->
+    <!-- Bulletproof Inline-Style Search Engine Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             lucide.createIcons();
@@ -279,9 +279,9 @@
                     const keywords = card.getAttribute('data-keywords') || '';
 
                     if (query === '' || text.includes(query) || keywords.includes(query)) {
-                        card.classList.remove('hidden');
+                        card.style.display = 'flex';
                     } else {
-                        card.classList.add('hidden');
+                        card.style.display = 'none';
                     }
                 });
             }
@@ -325,9 +325,9 @@
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
-                    card.classList.remove('hidden');
+                    card.style.display = 'flex';
                 } else {
-                    card.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
         }
