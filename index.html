@@ -71,21 +71,28 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Requested 3-Line Hierarchy -->
     <section class="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
         <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-20 pointer-events-none">
             <div class="w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]"></div>
         </div>
         
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300 text-xs font-semibold mb-6">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Powered by Autonomous AI Aggregation
-        </div>
-        
-        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
-            4o5.com LA's News and <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">AI Gateway</span>
+        <!-- Line 1: 4o5.com -->
+        <h1 class="text-5xl sm:text-7xl font-black tracking-tight text-white max-w-4xl mx-auto mb-4">
+            4o5<span class="text-blue-400">.com</span>
         </h1>
+
+        <!-- Line 2: LA's News and AI Gateway -->
+        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-200 max-w-4xl mx-auto mb-4">
+            LA's News and <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">AI Gateway</span>
+        </h2>
+
+        <!-- Line 3: Powered by Autonomous AI Aggregation -->
+        <p class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300 text-sm font-semibold mb-6 shadow-lg">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Powered by Autonomous AI Aggregation
+        </p>
         
-        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+        <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
@@ -96,7 +103,7 @@
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
                     <input type="text" id="directorySearch" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" onclick="executeSearch()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="button" id="searchBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
             </div>
@@ -255,21 +262,22 @@
         </div>
     </footer>
 
-    <!-- Robust Search & Filter Script -->
+    <!-- Fixed Search Engine Script -->
     <script>
         lucide.createIcons();
 
         const searchInput = document.getElementById('directorySearch');
+        const searchBtn = document.getElementById('searchBtn');
         const toolCards = document.querySelectorAll('.tool-card');
 
-        function executeSearch() {
+        function runSearch() {
             const query = searchInput.value.toLowerCase().trim();
 
             toolCards.forEach(card => {
-                const cardText = card.innerText.toLowerCase();
-                const cardKeywords = card.getAttribute('data-keywords') || '';
+                const text = card.innerText.toLowerCase();
+                const keywords = card.getAttribute('data-keywords') || '';
 
-                if (query === '' || cardText.includes(query) || cardKeywords.includes(query)) {
+                if (query === '' || text.includes(query) || keywords.includes(query)) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
@@ -277,22 +285,20 @@
             });
         }
 
-        // Live filtering on every character typed
-        searchInput.addEventListener('input', executeSearch);
-
-        // Allow pressing Enter to trigger search explicitly
-        searchInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                executeSearch();
+        // Bind events properly
+        searchInput.addEventListener('input', runSearch);
+        searchBtn.addEventListener('click', runSearch);
+        
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                runSearch();
             }
         });
 
         function filterCategory(category) {
-            // Clear search box when clicking category filters
             searchInput.value = '';
 
-            // Reset button appearances
             ['all', 'general', 'legal', 'free'].forEach(cat => {
                 const btn = document.getElementById(`btn-${cat}`);
                 if (btn) {
@@ -300,7 +306,6 @@
                 }
             });
 
-            // Highlight active category button
             const activeBtn = document.getElementById(`btn-${category}`);
             if (activeBtn) {
                 if (category === 'free') {
@@ -310,7 +315,6 @@
                 }
             }
 
-            // Toggle card visibility based on category
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
