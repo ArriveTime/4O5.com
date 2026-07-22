@@ -27,7 +27,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        .search-hidden { display: none !important; }
+        .force-hide { display: none !important; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-500 selection:text-white">
@@ -78,7 +78,7 @@
         </div>
     </header>
 
-    <!-- Hero Section with Updated & Wording -->
+    <!-- Hero Section -->
     <section class="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
         <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-20 pointer-events-none">
             <div class="w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]"></div>
@@ -105,14 +105,14 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
-        <!-- Functional Search Bar Component -->
+        <!-- Functional Search Bar with Immediate Inline Input Trigger -->
         <div class="mt-10 max-w-2xl mx-auto">
             <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
-                    <input type="text" id="directorySearch" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <input type="text" id="directorySearch" oninput="runLiveSearch(this.value)" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" id="searchSubmitBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="button" onclick="runLiveSearch(document.getElementById('directorySearch').value)" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
             </div>
@@ -265,12 +265,18 @@
         </div>
     </footer>
 
-    <!-- Bulletproof Search & Clock Script -->
+    <!-- Global Execution Scripts -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            lucide.createIcons();
+        // Initialize Lucide Icons
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            startClock();
+        });
 
-            // Live Los Angeles Time Clock
+        // Live Los Angeles Time Clock
+        function startClock() {
             function updateLATime() {
                 try {
                     const now = new Date();
@@ -299,38 +305,26 @@
             }
             updateLATime();
             setInterval(updateLATime, 1000);
+        }
 
-            // True Functioning Search Engine Logic
-            const searchInput = document.getElementById('directorySearch');
-            const searchBtn = document.getElementById('searchSubmitBtn');
+        // Global Standalone Live Search Engine Function
+        function runLiveSearch(val) {
+            const query = val ? val.toLowerCase().trim() : '';
+            const cards = document.querySelectorAll('.tool-card');
 
-            function performDirectorySearch() {
-                if (!searchInput) return;
-                const query = searchInput.value.toLowerCase().trim();
-                const cards = document.querySelectorAll('.tool-card');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                const keywords = card.getAttribute('data-keywords') || '';
 
-                cards.forEach(card => {
-                    const text = card.innerText.toLowerCase();
-                    const keywords = card.getAttribute('data-keywords') || '';
+                if (query === '' || text.includes(query) || keywords.includes(query)) {
+                    card.classList.remove('force-hide');
+                } else {
+                    card.classList.add('force-hide');
+                }
+            });
+        }
 
-                    if (query === '' || text.includes(query) || keywords.includes(query)) {
-                        card.classList.remove('search-hidden');
-                    } else {
-                        card.classList.add('search-hidden');
-                    }
-                });
-            }
-
-            if (searchInput) {
-                searchInput.addEventListener('input', performDirectorySearch);
-                searchInput.addEventListener('keyup', performDirectorySearch);
-            }
-
-            if (searchBtn) {
-                searchBtn.addEventListener('click', performDirectorySearch);
-            }
-        });
-
+        // Category Filter Function
         function filterCategory(category) {
             const searchInput = document.getElementById('directorySearch');
             if (searchInput) searchInput.value = '';
@@ -355,9 +349,9 @@
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
-                    card.classList.remove('search-hidden');
+                    card.classList.remove('force-hide');
                 } else {
-                    card.classList.add('search-hidden');
+                    card.classList.add('force-hide');
                 }
             });
         }
