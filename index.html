@@ -262,7 +262,7 @@
         </div>
     </footer>
 
-    <!-- Fixed Search Engine Script -->
+    <!-- Corrected Search & Filter Script using Tailwind 'hidden' class -->
     <script>
         lucide.createIcons();
 
@@ -278,14 +278,14 @@
                 const keywords = card.getAttribute('data-keywords') || '';
 
                 if (query === '' || text.includes(query) || keywords.includes(query)) {
-                    card.style.display = 'flex';
+                    card.classList.remove('hidden');
                 } else {
-                    card.style.display = 'none';
+                    card.classList.add('hidden');
                 }
             });
         }
 
-        // Bind events properly
+        // Event bindings
         searchInput.addEventListener('input', runSearch);
         searchBtn.addEventListener('click', runSearch);
         
@@ -318,9 +318,9 @@
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
-                    card.style.display = 'flex';
+                    card.classList.remove('hidden');
                 } else {
-                    card.style.display = 'none';
+                    card.classList.add('hidden');
                 }
             });
         }
