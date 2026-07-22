@@ -26,9 +26,6 @@
     </script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .force-hide { display: none !important; }
-    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-500 selection:text-white">
 
@@ -105,17 +102,17 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
-        <!-- Functional Search Bar with Immediate Inline Input Trigger -->
+        <!-- Functional Search Bar Form Component -->
         <div class="mt-10 max-w-2xl mx-auto">
-            <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
+            <form onsubmit="executeSearch(event)" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
-                    <input type="text" id="directorySearch" oninput="runLiveSearch(this.value)" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <input type="text" id="directorySearch" onkeyup="executeSearch(event)" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" onclick="runLiveSearch(document.getElementById('directorySearch').value)" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -265,9 +262,8 @@
         </div>
     </footer>
 
-    <!-- Global Execution Scripts -->
+    <!-- Bulletproof Global Execution Scripts -->
     <script>
-        // Initialize Lucide Icons
         window.addEventListener('DOMContentLoaded', () => {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
@@ -307,9 +303,13 @@
             setInterval(updateLATime, 1000);
         }
 
-        // Global Standalone Live Search Engine Function
-        function runLiveSearch(val) {
-            const query = val ? val.toLowerCase().trim() : '';
+        // Guaranteed Native Search Function
+        function executeSearch(event) {
+            if (event) event.preventDefault();
+            const input = document.getElementById('directorySearch');
+            if (!input) return;
+
+            const query = input.value.toLowerCase().trim();
             const cards = document.querySelectorAll('.tool-card');
 
             cards.forEach(card => {
@@ -317,9 +317,9 @@
                 const keywords = card.getAttribute('data-keywords') || '';
 
                 if (query === '' || text.includes(query) || keywords.includes(query)) {
-                    card.classList.remove('force-hide');
+                    card.style.display = 'flex';
                 } else {
-                    card.classList.add('force-hide');
+                    card.style.display = 'none';
                 }
             });
         }
@@ -349,9 +349,9 @@
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
-                    card.classList.remove('force-hide');
+                    card.style.display = 'flex';
                 } else {
-                    card.classList.add('force-hide');
+                    card.style.display = 'none';
                 }
             });
         }
