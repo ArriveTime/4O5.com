@@ -102,17 +102,17 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
-        <!-- Functional Search Bar Component with Direct Inline Trigger -->
+        <!-- Functional Search Form Component -->
         <div class="mt-10 max-w-2xl mx-auto">
-            <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
+            <form id="searchForm" onsubmit="handleSearchSubmit(event)" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
-                    <input type="text" id="directorySearch" oninput="runInstantSearch()" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <input type="text" id="directorySearch" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" onclick="runInstantSearch()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
-            </div>
+            </form>
         </div>
     </section>
 
@@ -247,10 +247,7 @@
             <strong>General Information & Autonomous News Disclaimer:</strong> 4o5.com is an independent digital media platform providing aggregated local news, weather, and traffic conditions for the Los Angeles region using automated systems and AI aggregation tools. Information is provided on an "as-is" and "as-available" basis without warranties of any kind.
         </p>
         <p>
-            <strong>AI & Legal Research Directory Disclaimer:</strong> The directory listings for artificial intelligence and legal research tools (including third-party platforms such as OpenAI, OpenCase, and others) are provided solely for informational and directory indexing purposes. 4o5.com does not provide legal advice, endorsement, or formal counsel. Users utilizing legal research AI models are solely responsible for verifying case law, regulatory compliance, and statutory accuracy independently.
-        </p>
-        <p>
-            <strong>Limitation of Liability:</strong> 4o5.com, its operators, and affiliates shall not be held liable for any direct, indirect, incidental, or consequential damages resulting from the use of real-time traffic updates, automated news summaries, or third-party AI software links featured on this domain.
+            <strong>AI & Legal Research Directory Disclaimer:</strong> 4o5.com provides directory listings for artificial intelligence and legal research tools for informational purposes.
         </p>
     </section>
 
@@ -268,46 +265,60 @@
         </div>
     </footer>
 
-    <!-- Guaranteed Functioning Scripts -->
+    <!-- Bulletproof Search & Clock Script -->
     <script>
-        lucide.createIcons();
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
 
-        // Live Los Angeles Time Clock
-        function updateLATime() {
-            try {
-                const now = new Date();
-                const options = {
-                    timeZone: 'America/Los_Angeles',
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: true
-                };
-                const formatter = new Intl.DateTimeFormat('en-US', options);
-                const clockEl = document.getElementById('laClock');
-                if (clockEl) {
-                    clockEl.innerText = formatter.format(now);
-                }
-            } catch (e) {
-                const clockEl = document.getElementById('laClock');
-                if (clockEl) {
-                    clockEl.innerText = "Los Angeles Time Active";
+            // Live Los Angeles Time Clock
+            function updateLATime() {
+                try {
+                    const now = new Date();
+                    const options = {
+                        timeZone: 'America/Los_Angeles',
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true
+                    };
+                    const formatter = new Intl.DateTimeFormat('en-US', options);
+                    const clockEl = document.getElementById('laClock');
+                    if (clockEl) {
+                        clockEl.innerText = formatter.format(now);
+                    }
+                } catch (e) {
+                    const clockEl = document.getElementById('laClock');
+                    if (clockEl) {
+                        clockEl.innerText = "Los Angeles Time Active";
+                    }
                 }
             }
-        }
-        updateLATime();
-        setInterval(updateLATime, 1000);
+            updateLATime();
+            setInterval(updateLATime, 1000);
 
-        // Bulletproof Instant Search Engine Function
-        function runInstantSearch() {
+            // Real-time Search Engine Listener
             const searchInput = document.getElementById('directorySearch');
-            if (!searchInput) return;
-            
-            const query = searchInput.value.toLowerCase().trim();
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    executeSearchQuery(this.value);
+                });
+            }
+        });
+
+        function handleSearchSubmit(event) {
+            event.preventDefault();
+            const searchInput = document.getElementById('directorySearch');
+            if (searchInput) {
+                executeSearchQuery(searchInput.value);
+            }
+        }
+
+        function executeSearchQuery(rawQuery) {
+            const query = rawQuery.toLowerCase().trim();
             const cards = document.querySelectorAll('.tool-card');
 
             cards.forEach(card => {
@@ -315,14 +326,15 @@
                 const keywords = card.getAttribute('data-keywords') || '';
 
                 if (query === '' || text.includes(query) || keywords.includes(query)) {
+                    card.classList.remove('hidden');
                     card.style.display = 'flex';
                 } else {
+                    card.classList.add('hidden');
                     card.style.display = 'none';
                 }
             });
         }
 
-        // Category Filter Function
         function filterCategory(category) {
             const searchInput = document.getElementById('directorySearch');
             if (searchInput) searchInput.value = '';
@@ -347,8 +359,10 @@
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
+                    card.classList.remove('hidden');
                     card.style.display = 'flex';
                 } else {
+                    card.classList.add('hidden');
                     card.style.display = 'none';
                 }
             });
