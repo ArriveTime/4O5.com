@@ -42,7 +42,7 @@
                 </span>
                 <span class="text-blue-300 hidden md:inline">|</span>
                 <span class="flex items-center gap-1.5 text-cyan-300 font-medium">
-                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span id="laClock">Loading LA Time...</span>
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span id="laClock">Loading LA Time...</span> PST
                 </span>
             </div>
             <div class="text-slate-400">
@@ -102,14 +102,14 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
-        <!-- Functional Search Bar Component -->
+        <!-- Functional Search Bar Component with Direct Inline Trigger -->
         <div class="mt-10 max-w-2xl mx-auto">
             <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
-                    <input type="text" id="directorySearch" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <input type="text" id="directorySearch" oninput="runInstantSearch()" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" id="searchBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="button" onclick="runInstantSearch()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
             </div>
@@ -268,71 +268,61 @@
         </div>
     </footer>
 
-    <!-- Bulletproof Search & Los Angeles Time Clock Script -->
+    <!-- Guaranteed Functioning Scripts -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            lucide.createIcons();
+        lucide.createIcons();
 
-            // Live Los Angeles Time Updater
-            function updateLATime() {
-                try {
-                    const now = new Date();
-                    const options = {
-                        timeZone: 'America/Los_Angeles',
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        hour12: true
-                    };
-                    const formatter = new Intl.DateTimeFormat('en-US', options);
-                    document.getElementById('laClock').innerText = formatter.format(now);
-                } catch (e) {
-                    document.getElementById('laClock').innerText = "Los Angeles Time Active";
+        // Live Los Angeles Time Clock
+        function updateLATime() {
+            try {
+                const now = new Date();
+                const options = {
+                    timeZone: 'America/Los_Angeles',
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                };
+                const formatter = new Intl.DateTimeFormat('en-US', options);
+                const clockEl = document.getElementById('laClock');
+                if (clockEl) {
+                    clockEl.innerText = formatter.format(now);
+                }
+            } catch (e) {
+                const clockEl = document.getElementById('laClock');
+                if (clockEl) {
+                    clockEl.innerText = "Los Angeles Time Active";
                 }
             }
-            updateLATime();
-            setInterval(updateLATime, 1000);
+        }
+        updateLATime();
+        setInterval(updateLATime, 1000);
 
-            // Robust Search Engine Logic
+        // Bulletproof Instant Search Engine Function
+        function runInstantSearch() {
             const searchInput = document.getElementById('directorySearch');
-            const searchBtn = document.getElementById('searchBtn');
-            const toolCards = document.querySelectorAll('.tool-card');
+            if (!searchInput) return;
+            
+            const query = searchInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.tool-card');
 
-            function performSearch() {
-                const query = searchInput.value.toLowerCase().trim();
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                const keywords = card.getAttribute('data-keywords') || '';
 
-                toolCards.forEach(card => {
-                    const text = card.innerText.toLowerCase();
-                    const keywords = card.getAttribute('data-keywords') || '';
+                if (query === '' || text.includes(query) || keywords.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
-                    if (query === '' || text.includes(query) || keywords.includes(query)) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
-
-            if (searchInput) {
-                searchInput.addEventListener('input', performSearch);
-                searchInput.addEventListener('keyup', performSearch);
-                searchInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        performSearch();
-                    }
-                });
-            }
-
-            if (searchBtn) {
-                searchBtn.addEventListener('click', performSearch);
-            }
-        });
-
+        // Category Filter Function
         function filterCategory(category) {
             const searchInput = document.getElementById('directorySearch');
             if (searchInput) searchInput.value = '';
