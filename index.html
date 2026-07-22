@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4o5.com | Los Angeles News, Weather, Traffic & AI Gateway</title>
+    <title>4o5.com | Los Angeles News, Weather, Traffic & AI Directory</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -26,6 +26,11 @@
     </script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .hidden-directory-card {
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-500 selection:text-white">
 
@@ -373,13 +378,12 @@
             setInterval(updateLATime, 1000);
         }
 
-        // Autonomous AI Semantic Intent Engine
+        // Autonomous AI Semantic Intent Engine with Bulletproof Class Toggle
         function initAISearchEngine() {
             const searchInput = document.getElementById('directorySearch');
             const searchBtn = document.getElementById('searchBtn');
             const statusEl = document.getElementById('searchStatus');
 
-            // Semantic AI Synonym Expansion Dictionary
             const aiSynonyms = {
                 'eat': ['dining', 'restaurants', 'food', 'bars', 'michelin', 'cuisine'],
                 'food': ['dining', 'restaurants', 'bars', 'michelin', 'cuisine'],
@@ -398,7 +402,6 @@
                 const rawQuery = searchInput.value.toLowerCase().trim();
                 const cards = document.querySelectorAll('.tool-card');
 
-                // Expand query with AI semantic intent mapping
                 let searchTerms = rawQuery.split(/\s+/);
                 let expandedTerms = [...searchTerms];
                 
@@ -417,16 +420,15 @@
                     const combinedMetadata = text + ' ' + keywords + ' ' + category;
 
                     if (rawQuery === '') {
-                        card.style.display = 'flex';
+                        card.classList.remove('hidden-directory-card');
                         matchCount++;
                     } else {
-                        // Check if any expanded semantic term matches card metadata
                         const isMatch = expandedTerms.some(term => combinedMetadata.includes(term));
                         if (isMatch) {
-                            card.style.display = 'flex';
+                            card.classList.remove('hidden-directory-card');
                             matchCount++;
                         } else {
-                            card.style.display = 'none';
+                            card.classList.add('hidden-directory-card');
                         }
                     }
                 });
@@ -479,9 +481,9 @@
             toolCards.forEach(card => {
                 const cardCat = card.getAttribute('data-category') || '';
                 if (category === 'all' || cardCat.includes(category)) {
-                    card.style.display = 'flex';
+                    card.classList.remove('hidden-directory-card');
                 } else {
-                    card.style.display = 'none';
+                    card.classList.add('hidden-directory-card');
                 }
             });
         }
