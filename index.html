@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4o5.com | Los Angeles News, Weather, Traffic & AI Directory</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                            950: '#172554',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-500 selection:text-white">
+
+    <!-- Top Traffic & Weather Ticker Bar -->
+    <div class="bg-blue-950 border-b border-blue-900/50 text-xs py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
+                <span class="flex items-center gap-1.5 text-amber-400 font-medium">
+                    <i data-lucide="car" class="w-3.5 h-3.5"></i> I-405 North: Moderate Delays (LAX to Westwood)
+                </span>
+                <span class="text-blue-300 hidden md:inline">|</span>
+                <span class="flex items-center gap-1.5 text-emerald-400 font-medium">
+                    <i data-lucide="sun" class="w-3.5 h-3.5"></i> Los Angeles: 74°F, Sunny & Clear
+                </span>
+            </div>
+            <div class="text-slate-400">
+                <span>The Pulse of LA & AI Innovation</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-xl px-3 py-1.5 rounded-lg shadow-lg shadow-blue-500/20 tracking-wider">
+                    4o5<span class="text-blue-300">.com</span>
+                </div>
+                <span class="text-xs uppercase tracking-widest text-slate-400 font-semibold hidden sm:inline-block border-l border-slate-700 pl-3">
+                    LA's News & AI Gateway
+                </span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+                <a href="#news" class="hover:text-blue-400 transition-colors">LA News & Weather</a>
+                <a href="#directory" class="hover:text-blue-400 transition-colors">AI & Legal Directory</a>
+                <a href="#about" class="hover:text-blue-400 transition-colors">About</a>
+            </nav>
+            <div>
+                <a href="#directory" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all shadow-md shadow-blue-600/20">
+                    Explore AI Tools
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
+        <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-20 pointer-events-none">
+            <div class="w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]"></div>
+        </div>
+        
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300 text-xs font-semibold mb-6">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Powered by Autonomous AI Aggregation
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+            Los Angeles Life, Connected to <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">The Future of AI</span>
+        </h1>
+        
+        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+            Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
+        </p>
+
+        <!-- Search Bar Component -->
+        <div class="mt-10 max-w-2xl mx-auto">
+            <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
+                <div class="flex items-center gap-2 px-3 flex-1">
+                    <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
+                    <input type="text" placeholder="Search AI tools, legal models, or LA news..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                </div>
+                <button class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                    Search Hub
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Grid Section: News vs Directory -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full flex-grow">
+        
+        <!-- Left 1 Column: LA News & Weather Flash -->
+        <div id="news" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i data-lucide="radio" class="w-5 h-5 text-blue-400"></i> LA Live Feed
+                </h2>
+                <span class="text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live Sync
+                </span>
+            </div>
+
+            <!-- News Item 1 -->
+            <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all">
+                <div class="text-xs text-blue-400 font-semibold mb-1">TRAFFIC & INFRASTRUCTURE • 12m ago</div>
+                <h3 class="font-semibold text-slate-100 text-sm mb-2">I-405 Southbound Carpool Lane Upgrades Scheduled Near Culver City</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">Caltrans announces overnight lane closures starting this Thursday to implement smart-sensor flow monitoring...</p>
+            </article>
+
+            <!-- News Item 2 -->
+            <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all">
+                <div class="text-xs text-blue-400 font-semibold mb-1">METRO & TRANSIT • 45m ago</div>
+                <h3 class="font-semibold text-slate-100 text-sm mb-2">LAX Automated People Mover Nears Final Safety Testing Phases</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">Airport officials give positive updates on integration timelines connecting aviation terminals directly to regional transit lines.</p>
+            </article>
+
+            <!-- News Item 3 -->
+            <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all">
+                <div class="text-xs text-blue-400 font-semibold mb-1">LOCAL WEATHER • 1h ago</div>
+                <h3 class="font-semibold text-slate-100 text-sm mb-2">SoCal Coastal Marine Layer Expected to Clear by Mid-Afternoon</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">Temperatures will peak in the mid-80s across the San Fernando Valley with mild breezes moving inland through the evening.</p>
+            </article>
+        </div>
+
+        <!-- Right 2 Columns: AI & Legal Research Directory -->
+        <div id="directory" class="lg:col-span-2 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-4">
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i> AI & Legal Research Directory
+                </h2>
+                <div class="flex gap-2 text-xs">
+                    <button class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-medium">All Tools</button>
+                    <button class="bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 px-3 py-1.5 rounded-lg font-medium">General LLMs</button>
+                    <button class="bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 px-3 py-1.5 rounded-lg font-medium">Legal Research</button>
+                </div>
+            </div>
+
+            <!-- Directory Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <!-- Card 1: OpenAI -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-950 text-blue-300 border border-blue-800/50">General AI</span>
+                            <span class="text-xs text-emerald-400 font-medium">Verified Active</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white group-hover:text-blue-400 transition-colors">OpenAI</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Pioneering general artificial intelligence models including GPT-4o, structured reasoning tools, and developer APIs.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">openai.com</span>
+                        <a href="https://openai.com" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                            Visit Site <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: OpenCase -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-purple-950 text-purple-300 border border-purple-800/50">Legal Research</span>
+                            <span class="text-xs text-emerald-400 font-medium">Verified Active</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white group-hover:text-blue-400 transition-colors">OpenCase</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Advanced legal research database and case-law analysis framework built to assist attorneys and compliance experts.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">opencase.com</span>
+                        <a href="#" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                            Visit Site <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Anthropic -->
+                <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-950 text-blue-300 border border-blue-800/50">General AI</span>
+                            <span class="text-xs text-emerald-400 font-medium">Verified Active</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white group-hover:text-blue-400 transition-colors">Anthropic Claude</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">Constitutional AI assistant designed for deep context comprehension, sophisticated coding, and complex document processing.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                        <span class="text-xs text-slate-500">anthropic.com</span>
+                        <a href="https://anthropic.com" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                            Visit Site <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Placeholder/Submission slot -->
+                <div class="bg-slate-900/30 border border-dashed border-slate-800 rounded-xl p-5 flex flex-col items-center justify-center text-center">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-slate-400 mb-3 border border-slate-800">
+                        <i data-lucide="plus" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-slate-200">Submit an AI or Legal Tool</h3>
+                    <p class="text-xs text-slate-500 mt-1 max-w-xs">Are you building an AI platform or legal utility? Index your service on 4o5.com.</p>
+                    <button class="mt-4 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium px-4 py-2 rounded-lg transition-colors">
+                        Add Tool Listing
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="about" class="border-t border-slate-900 bg-slate-950 text-slate-500 text-xs py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <p>&copy; 2026 4o5.com. Named after the historic California freeway. All rights reserved.</p>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-slate-300 transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-slate-300 transition-colors">API Status</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
