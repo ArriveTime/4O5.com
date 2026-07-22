@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4o5.com | Los Angeles News, Weather, Traffic & AI Directory</title>
+    <title>4o5.com | Los Angeles News, Weather, Traffic & AI Gateway</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -102,24 +102,25 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for AI, sports, tickets, dining, and entertainment.
         </p>
 
-        <!-- Functional Search Bar Component -->
+        <!-- AI Semantic Search Bar Component -->
         <div class="mt-10 max-w-2xl mx-auto">
             <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
-                    <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
-                    <input type="text" id="directorySearch" placeholder="Search AI tools, tickets, sports, dining..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-blue-400 animate-pulse"></i>
+                    <input type="text" id="directorySearch" placeholder="Ask AI Search (e.g., 'where to eat', 'legal research', 'dodgers')..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
                 <button type="button" id="searchBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
-                    Search Hub
+                    AI Search
                 </button>
             </div>
+            <p id="searchStatus" class="text-xs text-slate-500 mt-2">Autonomous AI Intent Engine Active</p>
         </div>
     </section>
 
     <!-- Main Grid Section: News vs Directory -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full flex-grow">
         
-        <!-- Left 1 Column: LA News & Weather Flash (Now fully linked to official sources) -->
+        <!-- Left 1 Column: LA News & Weather Flash -->
         <div id="news" class="space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
@@ -130,7 +131,7 @@
                 </span>
             </div>
 
-            <!-- News Item 1: Traffic (Caltrans Linked) -->
+            <!-- News Item 1 -->
             <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
                 <div>
                     <div class="text-xs text-blue-400 font-semibold mb-1">TRAFFIC & INFRASTRUCTURE • 12m ago</div>
@@ -145,7 +146,7 @@
                 </div>
             </article>
 
-            <!-- News Item 2: Metro & Transit (LA Metro Linked) -->
+            <!-- News Item 2 -->
             <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
                 <div>
                     <div class="text-xs text-blue-400 font-semibold mb-1">METRO & TRANSIT • 45m ago</div>
@@ -160,7 +161,7 @@
                 </div>
             </article>
 
-            <!-- News Item 3: Weather (National Weather Service Linked) -->
+            <!-- News Item 3 -->
             <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
                 <div>
                     <div class="text-xs text-blue-400 font-semibold mb-1">LOCAL WEATHER • 1h ago</div>
@@ -180,7 +181,7 @@
         <div id="directory" class="lg:col-span-2 space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-4">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i> Hub Directory & Feeds
+                    <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i> AI Hub Directory & Feeds
                 </h2>
                 <div class="flex flex-wrap gap-2 text-xs">
                     <button type="button" onclick="filterCategory('all')" id="btn-all" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors">All</button>
@@ -196,7 +197,7 @@
             <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 <!-- Card 1: OpenAI -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general" data-keywords="openai gpt-4o general ai free option">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general" data-keywords="openai gpt-4o general ai free option chatbot model language">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-950 text-blue-300 border border-blue-800/50">General AI • Free Option</span>
@@ -214,7 +215,7 @@
                 </div>
 
                 <!-- Card 2: OpenCase -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general" data-keywords="opencase legal research attorneys law compliance">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general" data-keywords="opencase legal research attorneys law compliance court attorney lawsuit briefing">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-purple-950 text-purple-300 border border-purple-800/50">Legal Research</span>
@@ -232,7 +233,7 @@
                 </div>
 
                 <!-- Card 3: LA Sports Hub -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-amber-500/50 transition-all group" data-category="sports" data-keywords="sports dodgers lakers la rams clippers kings baseball basketball football">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-amber-500/50 transition-all group" data-category="sports" data-keywords="sports dodgers lakers la rams clippers kings baseball basketball football game score">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-950 text-amber-300 border border-amber-800/50">LA Sports Live</span>
@@ -250,7 +251,7 @@
                 </div>
 
                 <!-- Card 4: LA Tickets & Events -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-rose-500/50 transition-all group" data-category="tickets" data-keywords="tickets events sporting events concerts theater passes stubhub ticketmaster">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-rose-500/50 transition-all group" data-category="tickets" data-keywords="tickets events sporting events concerts theater passes stubhub ticketmaster buy show">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-rose-950 text-rose-300 border border-rose-800/50">Tickets & Events</span>
@@ -268,7 +269,7 @@
                 </div>
 
                 <!-- Card 5: LA Dining Guide -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-emerald-500/50 transition-all group" data-category="dining" data-keywords="dining restaurants food bars culinary michelin downtown hollywood">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-emerald-500/50 transition-all group" data-category="dining" data-keywords="dining restaurants food bars culinary michelin downtown hollywood eat hungry cuisine">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-emerald-950 text-emerald-300 border border-emerald-800/50">Culinary & Dining</span>
@@ -286,7 +287,7 @@
                 </div>
 
                 <!-- Card 6: LA Entertainment & Nightlife -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-purple-500/50 transition-all group" data-category="entertainment" data-keywords="entertainment nightlife concerts movies shows events hollywood venue">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-purple-500/50 transition-all group" data-category="entertainment" data-keywords="entertainment nightlife concerts movies shows events hollywood venue party club">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-purple-950 text-purple-300 border border-purple-800/50">Nightlife & Events</span>
@@ -312,7 +313,7 @@
     <section id="legal" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full border-t border-slate-900 text-slate-400 text-xs space-y-3">
         <h3 class="font-bold text-slate-300 uppercase tracking-wider">Legal Disclaimers & Terms of Use</h3>
         <p>
-            <strong>General Information & Autonomous News Disclaimer:</strong> 4o5.com is an independent digital media platform providing aggregated local news, weather, traffic, sports, tickets, dining, and entertainment conditions for the Los Angeles region using automated systems and AI aggregation tools.
+            <strong>General Information & Autonomous News Disclaimer:</strong> 4o5.com is an independent digital media platform providing aggregated local news, weather, traffic, sports, tickets, dining, and entertainment conditions for the Los Angeles region using autonomous AI semantic intelligence.
         </p>
     </section>
 
@@ -330,14 +331,14 @@
         </div>
     </footer>
 
-    <!-- Bulletproof Permanent Search & Real-Time Sync Script -->
+    <!-- Autonomous AI Semantic Search Engine Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
             startClock();
-            initSearchEngine();
+            initAISearchEngine();
         });
 
         // Live Los Angeles Time Clock
@@ -372,35 +373,82 @@
             setInterval(updateLATime, 1000);
         }
 
-        // Permanent Bulletproof Search Engine Implementation
-        function initSearchEngine() {
+        // Autonomous AI Semantic Intent Engine
+        function initAISearchEngine() {
             const searchInput = document.getElementById('directorySearch');
             const searchBtn = document.getElementById('searchBtn');
+            const statusEl = document.getElementById('searchStatus');
 
-            function performSearch() {
+            // Semantic AI Synonym Expansion Dictionary
+            const aiSynonyms = {
+                'eat': ['dining', 'restaurants', 'food', 'bars', 'michelin', 'cuisine'],
+                'food': ['dining', 'restaurants', 'bars', 'michelin', 'cuisine'],
+                'hungry': ['dining', 'restaurants', 'food'],
+                'lawyer': ['legal', 'opencase', 'attorneys', 'compliance', 'court', 'law'],
+                'court': ['legal', 'opencase', 'attorneys'],
+                'game': ['sports', 'dodgers', 'lakers', 'rams', 'baseball', 'basketball'],
+                'match': ['sports', 'dodgers', 'lakers', 'rams'],
+                'show': ['entertainment', 'tickets', 'concerts', 'theater', 'movies', 'events'],
+                'concert': ['entertainment', 'tickets', 'concerts', 'shows'],
+                'fun': ['entertainment', 'nightlife', 'events']
+            };
+
+            function performAISearch() {
                 if (!searchInput) return;
-                const query = searchInput.value.toLowerCase().trim();
+                const rawQuery = searchInput.value.toLowerCase().trim();
                 const cards = document.querySelectorAll('.tool-card');
+
+                // Expand query with AI semantic intent mapping
+                let searchTerms = rawQuery.split(/\s+/);
+                let expandedTerms = [...searchTerms];
+                
+                searchTerms.forEach(term => {
+                    if (aiSynonyms[term]) {
+                        expandedTerms.push(...aiSynonyms[term]);
+                    }
+                });
+
+                let matchCount = 0;
 
                 cards.forEach(card => {
                     const text = card.innerText.toLowerCase();
                     const keywords = card.getAttribute('data-keywords') || '';
+                    const category = card.getAttribute('data-category') || '';
+                    const combinedMetadata = text + ' ' + keywords + ' ' + category;
 
-                    if (query === '' || text.includes(query) || keywords.includes(query)) {
+                    if (rawQuery === '') {
                         card.style.display = 'flex';
+                        matchCount++;
                     } else {
-                        card.style.display = 'none';
+                        // Check if any expanded semantic term matches card metadata
+                        const isMatch = expandedTerms.some(term => combinedMetadata.includes(term));
+                        if (isMatch) {
+                            card.style.display = 'flex';
+                            matchCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
                     }
                 });
+
+                if (statusEl) {
+                    if (rawQuery === '') {
+                        statusEl.innerText = "Autonomous AI Intent Engine Active";
+                        statusEl.className = "text-xs text-slate-500 mt-2";
+                    } else {
+                        statusEl.innerText = `AI Semantic Match: Found ${matchCount} relevant result(s) for "${rawQuery}"`;
+                        statusEl.className = "text-xs text-blue-400 mt-2 font-medium";
+                    }
+                }
             }
 
             if (searchInput) {
-                searchInput.addEventListener('input', performSearch);
-                searchInput.addEventListener('keyup', performSearch);
+                searchInput.addEventListener('input', performAISearch);
+                searchInput.addEventListener('keyup', performAISearch);
             }
 
             if (searchBtn) {
-                searchBtn.addEventListener('click', performSearch);
+                searchBtn.addEventListener('click', performAISearch);
             }
         }
 
@@ -419,6 +467,12 @@
             const activeBtn = document.getElementById(`btn-${category}`);
             if (activeBtn) {
                 activeBtn.className = 'bg-blue-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors';
+            }
+
+            const statusEl = document.getElementById('searchStatus');
+            if (statusEl) {
+                statusEl.innerText = "Autonomous AI Intent Engine Active";
+                statusEl.className = "text-xs text-slate-500 mt-2";
             }
 
             const toolCards = document.querySelectorAll('.tool-card');
