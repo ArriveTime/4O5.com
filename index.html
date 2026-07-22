@@ -89,14 +89,14 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
-        <!-- Functional Search Bar Component (No Auto-Scroll) -->
+        <!-- Functional Search Bar Component -->
         <div class="mt-10 max-w-2xl mx-auto">
             <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
                     <input type="text" id="directorySearch" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" onclick="performSearch()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="button" onclick="executeSearch()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
             </div>
@@ -157,7 +157,7 @@
             <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 <!-- Card 1: OpenAI -->
-                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general free" data-keywords="openai gpt-4o general AI free option">
+                <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general free" data-keywords="openai gpt-4o general ai free option">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-950 text-blue-300 border border-blue-800/50">General AI • Free Option</span>
@@ -255,44 +255,44 @@
         </div>
     </footer>
 
-    <!-- Search & Filter Interactivity Script (No Scroll Version) -->
+    <!-- Robust Search & Filter Script -->
     <script>
         lucide.createIcons();
 
         const searchInput = document.getElementById('directorySearch');
         const toolCards = document.querySelectorAll('.tool-card');
 
-        function performSearch() {
+        function executeSearch() {
             const query = searchInput.value.toLowerCase().trim();
-            
+
             toolCards.forEach(card => {
-                const textContent = card.innerText.toLowerCase();
-                const keywords = card.getAttribute('data-keywords') || '';
-                
-                if (query === '' || textContent.includes(query) || keywords.includes(query)) {
+                const cardText = card.innerText.toLowerCase();
+                const cardKeywords = card.getAttribute('data-keywords') || '';
+
+                if (query === '' || cardText.includes(query) || cardKeywords.includes(query)) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
                 }
             });
-            // Note: Auto-scroll code has been intentionally removed so typing stays smooth and stationary.
         }
 
-        // Real-time listener as user types
-        searchInput.addEventListener('input', performSearch);
+        // Live filtering on every character typed
+        searchInput.addEventListener('input', executeSearch);
 
-        // Allow pressing "Enter" inside the search box
-        searchInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                performSearch();
+        // Allow pressing Enter to trigger search explicitly
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                executeSearch();
             }
         });
 
         function filterCategory(category) {
-            // Reset search input box when clicking category tabs
+            // Clear search box when clicking category filters
             searchInput.value = '';
 
-            // Reset active button styles
+            // Reset button appearances
             ['all', 'general', 'legal', 'free'].forEach(cat => {
                 const btn = document.getElementById(`btn-${cat}`);
                 if (btn) {
@@ -300,7 +300,7 @@
                 }
             });
 
-            // Highlight selected category button
+            // Highlight active category button
             const activeBtn = document.getElementById(`btn-${category}`);
             if (activeBtn) {
                 if (category === 'free') {
@@ -310,7 +310,7 @@
                 }
             }
 
-            // Show/hide cards based on category attribute match
+            // Toggle card visibility based on category
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
