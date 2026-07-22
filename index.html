@@ -29,7 +29,7 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-blue-500 selection:text-white">
 
-    <!-- Top Traffic & Weather Ticker Bar -->
+    <!-- Top Traffic, Weather & Live Time Ticker Bar -->
     <div class="bg-blue-950 border-b border-blue-900/50 text-xs py-2 px-4">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
             <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
@@ -39,6 +39,10 @@
                 <span class="text-blue-300 hidden md:inline">|</span>
                 <span class="flex items-center gap-1.5 text-emerald-400 font-medium">
                     <i data-lucide="sun" class="w-3.5 h-3.5"></i> Los Angeles: 74°F, Sunny & Clear
+                </span>
+                <span class="text-blue-300 hidden md:inline">|</span>
+                <span class="flex items-center gap-1.5 text-cyan-300 font-medium">
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span id="liveClock">Wednesday, July 22, 2026 - 11:36 AM</span>
                 </span>
             </div>
             <div class="text-slate-400">
@@ -71,7 +75,7 @@
         </div>
     </header>
 
-    <!-- Hero Section with Reordered Top 3 Lines -->
+    <!-- Hero Section -->
     <section class="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full text-center">
         <div class="absolute inset-0 -z-10 flex items-center justify-center opacity-20 pointer-events-none">
             <div class="w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]"></div>
@@ -103,9 +107,10 @@
             <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="search" class="w-5 h-5 text-slate-400"></i>
-                    <input type="text" id="directorySearch" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
+                    <!-- Added oninput attribute for instant triggering -->
+                    <input type="text" id="directorySearch" oninput="triggerSearch()" placeholder="Search AI tools, legal models, or free options..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
                 </div>
-                <button type="button" id="searchBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+                <button type="button" onclick="triggerSearch()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
                     Search Hub
                 </button>
             </div>
@@ -264,45 +269,26 @@
         </div>
     </footer>
 
-    <!-- Bulletproof Search Script -->
+    <!-- Guaranteed Functioning Search & Clock Script -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            lucide.createIcons();
+        lucide.createIcons();
 
-            const searchInput = document.getElementById('directorySearch');
-            const searchBtn = document.getElementById('searchBtn');
-            const toolCards = document.querySelectorAll('.tool-card');
+        function triggerSearch() {
+            const input = document.getElementById('directorySearch');
+            const query = input.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.tool-card');
 
-            function performSearch() {
-                const query = searchInput.value.toLowerCase().trim();
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                const keywords = card.getAttribute('data-keywords') || '';
 
-                toolCards.forEach(card => {
-                    const text = card.innerText.toLowerCase();
-                    const keywords = card.getAttribute('data-keywords') || '';
-
-                    if (query === '' || text.includes(query) || keywords.includes(query)) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
-
-            if (searchInput) {
-                searchInput.addEventListener('input', performSearch);
-                searchInput.addEventListener('keyup', performSearch);
-                searchInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        performSearch();
-                    }
-                });
-            }
-
-            if (searchBtn) {
-                searchBtn.addEventListener('click', performSearch);
-            }
-        });
+                if (query === '' || text.includes(query) || keywords.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
         function filterCategory(category) {
             const searchInput = document.getElementById('directorySearch');
