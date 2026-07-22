@@ -36,21 +36,22 @@
 
     <!-- Top Traffic, Weather & Los Angeles Time Ticker Bar -->
     <div class="bg-blue-950 border-b border-blue-900/50 text-xs py-2 px-4">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-            <div class="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
-                <span class="flex items-center gap-1.5 text-amber-400 font-medium">
-                    <i data-lucide="car" class="w-3.5 h-3.5"></i> I-405 North: Moderate Delays (LAX to Westwood)
+        <!-- Responsive Ticker: Stacked vertically on mobile, horizontal row on desktop -->
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 text-center md:text-left">
+            <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4 w-full md:w-auto">
+                <span class="flex items-center justify-center gap-1.5 text-amber-400 font-medium w-full md:w-auto">
+                    <i data-lucide="car" class="w-3.5 h-3.5 flex-shrink-0"></i> I-405 North: Moderate Delays (LAX to Westwood)
                 </span>
                 <span class="text-blue-300 hidden md:inline">|</span>
-                <span class="flex items-center gap-1.5 text-emerald-400 font-medium">
-                    <i data-lucide="sun" class="w-3.5 h-3.5"></i> Los Angeles: 74°F, Sunny & Clear
+                <span class="flex items-center justify-center gap-1.5 text-emerald-400 font-medium w-full md:w-auto">
+                    <i data-lucide="sun" class="w-3.5 h-3.5 flex-shrink-0"></i> Los Angeles: 74°F, Sunny & Clear
                 </span>
                 <span class="text-blue-300 hidden md:inline">|</span>
-                <span class="flex items-center gap-1.5 text-cyan-300 font-medium">
-                    <i data-lucide="clock" class="w-3.5 h-3.5"></i> <span id="laClock">Loading LA Time...</span> PST
+                <span class="flex items-center justify-center gap-1.5 text-cyan-300 font-medium w-full md:w-auto">
+                    <i data-lucide="clock" class="w-3.5 h-3.5 flex-shrink-0"></i> <span id="laClock">Loading LA Time...</span> PST
                 </span>
             </div>
-            <div class="text-slate-400">
+            <div class="text-slate-400 hidden md:block">
                 <span>The Pulse of LA & AI Innovation</span>
             </div>
         </div>
@@ -378,7 +379,7 @@
             setInterval(updateLATime, 1000);
         }
 
-        // Dual AI Engine: Instant Local Filter + Live AI Search Query
+        // Dual AI Engine: Instant Local Filter + Live AI Search Query (Silent Status Bar)
         function initAISearchEngine() {
             const searchInput = document.getElementById('directorySearch');
             const searchForm = document.getElementById('internetSearchForm');
@@ -411,8 +412,6 @@
                     }
                 });
 
-                let matchCount = 0;
-
                 cards.forEach(card => {
                     const text = card.innerText.toLowerCase();
                     const keywords = card.getAttribute('data-keywords') || '';
@@ -421,26 +420,19 @@
 
                     if (rawQuery === '') {
                         card.classList.remove('hidden-directory-card');
-                        matchCount++;
                     } else {
                         const isMatch = expandedTerms.some(term => combinedMetadata.includes(term));
                         if (isMatch) {
                             card.classList.remove('hidden-directory-card');
-                            matchCount++;
                         } else {
                             card.classList.add('hidden-directory-card');
                         }
                     }
                 });
 
+                // Keep status text static and clean without distracting dynamic match counts
                 if (statusEl) {
-                    if (rawQuery === '') {
-                        statusEl.innerText = "Autonomous AI Gateway: Local filter + Live AI Search Active";
-                        statusEl.className = "text-xs text-slate-500 mt-2";
-                    } else {
-                        statusEl.innerText = `AI Semantic Match: Found ${matchCount} local hub result(s). Press Enter for Live AI Search.`;
-                        statusEl.className = "text-xs text-blue-400 mt-2 font-medium";
-                    }
+                    statusEl.innerText = "Autonomous AI Gateway: Local filter + Live AI Search Active";
                 }
             }
 
@@ -483,7 +475,6 @@
             const statusEl = document.getElementById('searchStatus');
             if (statusEl) {
                 statusEl.innerText = "Autonomous AI Gateway: Local filter + Live AI Search Active";
-                statusEl.className = "text-xs text-slate-500 mt-2";
             }
 
             const toolCards = document.querySelectorAll('.tool-card');
