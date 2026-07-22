@@ -89,7 +89,7 @@
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for general and legal AI research tools.
         </p>
 
-        <!-- Functional Search Bar Component -->
+        <!-- Functional Search Bar Component (No Auto-Scroll) -->
         <div class="mt-10 max-w-2xl mx-auto">
             <div class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
@@ -255,7 +255,7 @@
         </div>
     </footer>
 
-    <!-- Search & Filter Interactivity Script -->
+    <!-- Search & Filter Interactivity Script (No Scroll Version) -->
     <script>
         lucide.createIcons();
 
@@ -275,15 +275,13 @@
                     card.style.display = 'none';
                 }
             });
-
-            // Smooth scroll down to the directory results when searching
-            document.getElementById('directory').scrollIntoView({ behavior: 'smooth' });
+            // Note: Auto-scroll code has been intentionally removed so typing stays smooth and stationary.
         }
 
         // Real-time listener as user types
         searchInput.addEventListener('input', performSearch);
 
-        // Allow pressing "Enter" inside the search box to trigger search
+        // Allow pressing "Enter" inside the search box
         searchInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 performSearch();
