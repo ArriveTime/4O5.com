@@ -262,42 +262,48 @@
         </div>
     </footer>
 
-    <!-- Corrected Search & Filter Script using Tailwind 'hidden' class -->
+    <!-- Bulletproof Search Script wrapped in DOMContentLoaded -->
     <script>
-        lucide.createIcons();
+        document.addEventListener("DOMContentLoaded", function() {
+            lucide.createIcons();
 
-        const searchInput = document.getElementById('directorySearch');
-        const searchBtn = document.getElementById('searchBtn');
-        const toolCards = document.querySelectorAll('.tool-card');
+            const searchInput = document.getElementById('directorySearch');
+            const searchBtn = document.getElementById('searchBtn');
+            const toolCards = document.querySelectorAll('.tool-card');
 
-        function runSearch() {
-            const query = searchInput.value.toLowerCase().trim();
+            function runSearch() {
+                const query = searchInput.value.toLowerCase().trim();
 
-            toolCards.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                const keywords = card.getAttribute('data-keywords') || '';
+                toolCards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    const keywords = card.getAttribute('data-keywords') || '';
 
-                if (query === '' || text.includes(query) || keywords.includes(query)) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        }
+                    if (query === '' || text.includes(query) || keywords.includes(query)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            }
 
-        // Event bindings
-        searchInput.addEventListener('input', runSearch);
-        searchBtn.addEventListener('click', runSearch);
-        
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                runSearch();
+            if (searchInput) {
+                searchInput.addEventListener('input', runSearch);
+                searchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        runSearch();
+                    }
+                });
+            }
+
+            if (searchBtn) {
+                searchBtn.addEventListener('click', runSearch);
             }
         });
 
         function filterCategory(category) {
-            searchInput.value = '';
+            const searchInput = document.getElementById('directorySearch');
+            if (searchInput) searchInput.value = '';
 
             ['all', 'general', 'legal', 'free'].forEach(cat => {
                 const btn = document.getElementById(`btn-${cat}`);
@@ -315,6 +321,7 @@
                 }
             }
 
+            const toolCards = document.querySelectorAll('.tool-card');
             toolCards.forEach(card => {
                 const categories = card.getAttribute('data-category') || '';
                 if (category === 'all' || categories.includes(category)) {
