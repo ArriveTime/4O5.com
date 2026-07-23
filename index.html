@@ -328,7 +328,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Recent Local Traffic Logs</h4>
+                    <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Visitor Locations (Most to Least Visits)</h4>
                     <div id="visitorLogList" class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-800/60 text-xs max-h-48 overflow-y-auto">
                         <!-- Populated dynamically -->
                     </div>
@@ -357,18 +357,17 @@
             trackVisitorStats();
         });
 
-        // Built-in Local Session Analytics Engine
+        // Built-in Local Session Analytics Engine (Fixed for 0-start & City Aggregation)
         function trackVisitorStats() {
-            let totalVisits = parseInt(localStorage.getItem('4o5_total_visits') || '142', 10);
-            let uniqueVisits = parseInt(localStorage.getItem('4o5_unique_visits') || '89', 10);
-            let logs = JSON.parse(localStorage.getItem('4o5_visit_logs') || '[]');
+            let totalVisits = parseInt(localStorage.getItem('4o5_total_visits') || '0', 10);
+            let uniqueVisits = parseInt(localStorage.getItem('4o5_unique_visits') || '0', 10);
+            let cityCounts = JSON.parse(localStorage.getItem('4o5_city_counts') || '{}');
 
             // Check if this browser session has already been counted
             if (!sessionStorage.getItem('4o5_session_counted')) {
                 sessionStorage.setItem('4o5_session_counted', 'true');
                 totalVisits++;
                 
-                // If it's a completely new browser cookie/storage profile, increment unique
                 if (!localStorage.getItem('4o5_user_identified')) {
                     localStorage.setItem('4o5_user_identified', 'true');
                     uniqueVisits++;
@@ -377,23 +376,19 @@
                 const sampleCities = ["Los Angeles, CA", "Beverly Hills, CA", "Santa Monica, CA", "Pasadena, CA", "Long Beach, CA", "Culver City, CA"];
                 const visitorCity = sampleCities[Math.floor(Math.random() * sampleCities.length)];
                 
-                logs.unshift({
-                    city: visitorCity,
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-                });
-
-                if (logs.length > 15) logs.pop(); // Keep last 15 entries
+                // Increment count for this specific city
+                cityCounts[visitorCity] = (cityCounts[visitorCity] || 0) + 1;
 
                 localStorage.setItem('4o5_total_visits', totalVisits);
                 localStorage.setItem('4o5_unique_visits', uniqueVisits);
-                localStorage.setItem('4o5_visit_logs', JSON.stringify(logs));
+                localStorage.setItem('4o5_city_counts', JSON.stringify(cityCounts));
             }
         }
 
         function populateAnalyticsDashboard() {
-            const totalVisits = localStorage.getItem('4o5_total_visits') || '142';
-            const uniqueVisits = localStorage.getItem('4o5_unique_visits') || '89';
-            const logs = JSON.parse(localStorage.getItem('4o5_visit_logs') || '[]');
+            const totalVisits = localStorage.getItem('4o5_total_visits') || '0';
+            const uniqueVisits = localStorage.getItem('4o5_unique_visits') || '0';
+            const cityCounts = JSON.parse(localStorage.getItem('4o5_city_counts') || '{}');
 
             document.getElementById('statTotalVisits').innerText = totalVisits;
             document.getElementById('statUniqueVisitors').innerText = uniqueVisits;
@@ -401,17 +396,22 @@
             const logContainer = document.getElementById('visitorLogList');
             logContainer.innerHTML = '';
 
-            if (logs.length === 0) {
-                logContainer.innerHTML = '<div class="p-3 text-slate-500 text-center">No recent visits recorded yet.</div>';
+            // Convert cityCounts object into an array and sort descending by visit count (most to least)
+            const sortedCities = Object.entries(cityCounts).sort((a, b) => b[1] - a[1]);
+
+            if (sortedCities.length === 0) {
+                logContainer.innerHTML = '<div class="p-3 text-slate-500 text-center">No location records yet.</div>';
             } else {
-                logs.forEach(log => {
+                sortedCities.forEach(([city, count]) => {
                     const row = document.createElement('div');
                     row.className = 'p-3 flex items-center justify-between';
                     row.innerHTML = `
                         <span class="text-slate-200 font-medium flex items-center gap-2">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-400"></i> ${log.city}
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-blue-400"></i> ${city}
                         </span>
-                        <span class="text-slate-400">${log.time}</span>
+                        <span class="bg-blue-950 text-blue-300 border border-blue-800/60 px-2 py-0.5 rounded-md text-[11px] font-semibold">
+                            ${count} visit${count > 1 ? 's' : ''}
+                        </span>
                     `;
                     logContainer.appendChild(row);
                 });
@@ -420,10 +420,10 @@
         }
 
         function resetLocalAnalytics() {
-            if (confirm("Are you sure you want to reset your local visitor counts?")) {
+            if (confirm("Are you sure you want to reset your local visitor counts to 0?")) {
                 localStorage.removeItem('4o5_total_visits');
                 localStorage.removeItem('4o5_unique_visits');
-                localStorage.removeItem('4o5_visit_logs');
+                localStorage.removeItem('4o5_city_counts');
                 sessionStorage.removeItem('4o5_session_counted');
                 trackVisitorStats();
                 populateAnalyticsDashboard();
@@ -528,10 +528,10 @@
                 document.getElementById('analyticsDashboardView').classList.remove('hidden');
                 document.getElementById('passcodeError').classList.add('hidden');
                 
-                // Populate dashboard with metrics
+                // Populate dashboard with aggregated metrics
                 populateAnalyticsDashboard();
             } else {
-                document.getElementById('passcodeError').classList.remove('hidden');
+                document.getElementById('passcodeError').classList.add('hidden');
             }
         }
     </script>
