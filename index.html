@@ -124,7 +124,7 @@
     <!-- Main Grid Section -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full flex-grow">
         
-        <!-- Left 1 Column: Live News Feed (Dynamically Populated Free RSS Feed) -->
+        <!-- Left 1 Column: Live News Feed -->
         <div id="news" class="space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
@@ -255,48 +255,60 @@
         </div>
     </footer>
 
-    <!-- Advertise Modal Window -->
+    <!-- Advertise Modal Window with Direct Email Instructions & Category Buttons -->
     <div id="advertiseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h3 class="text-white font-bold text-base flex items-center gap-2">
-                    <i data-lucide="megaphone" class="w-5 h-5 text-blue-400"></i> Advertise on 4O5.com
+                    <i data-lucide="megaphone" class="w-5 h-5 text-blue-400"></i> Contact & Inquiries — 4O5.com
                 </h3>
                 <button onclick="closeAdvertiseModal()" class="text-slate-400 hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
 
-            <div id="adFormContent" class="space-y-4">
-                <p class="text-xs text-slate-400 leading-relaxed">Reach thousands of daily commuters and visitors searching for Los Angeles news, transit, AI tools, and local entertainment. Fill out your details below to request media kits and placement pricing.</p>
+            <div class="space-y-4">
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Please email all advertising, investor, and partnership inquiries directly to:
+                </p>
                 
-                <form onsubmit="submitAdvertiseInquiry(event)" class="space-y-3">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Your Name or Business</label>
-                        <input type="text" id="adName" required placeholder="e.g. Acme Los Angeles Services" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Contact Email</label>
-                        <input type="email" id="adEmail" required placeholder="name@yourbusiness.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Campaign Goal / Message</label>
-                        <textarea id="adMessage" rows="3" placeholder="Tell us what you'd like to promote..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl text-sm transition-all shadow-lg shadow-blue-600/20">
-                        Submit Advertising Inquiry
-                    </button>
-                </form>
+                <!-- Highlighted Email Box -->
+                <div class="bg-slate-950 border border-blue-500/40 rounded-xl p-3 text-center">
+                    <a href="mailto:All4aim@hotmail.com?subject=Advertising%20Inquiry%20-%204O5.com" class="text-blue-400 hover:text-blue-300 font-mono font-bold text-sm tracking-wide">
+                        All4aim@hotmail.com
+                    </a>
+                </div>
+
+                <p class="text-[11px] text-slate-400">
+                    Or select a category below to automatically open your email app with a pre-formatted subject line:
+                </p>
+
+                <!-- Category Quick-Action Mailto Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                    <a href="mailto:All4aim@hotmail.com?subject=Advertising%20Inquiry%20-%204O5.com" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-slate-200 text-xs font-semibold p-3 rounded-xl transition-all flex items-center justify-between group">
+                        <span class="flex items-center gap-2"><i data-lucide="tag" class="w-3.5 h-3.5 text-blue-400"></i> Advertising</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400"></i>
+                    </a>
+                    
+                    <a href="mailto:All4aim@hotmail.com?subject=Investor%20Inquiry%20-%204O5.com" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-slate-200 text-xs font-semibold p-3 rounded-xl transition-all flex items-center justify-between group">
+                        <span class="flex items-center gap-2"><i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-400"></i> Investors</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400"></i>
+                    </a>
+
+                    <a href="mailto:All4aim@hotmail.com?subject=Partnership%20Inquiry%20-%204O5.com" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-slate-200 text-xs font-semibold p-3 rounded-xl transition-all flex items-center justify-between group">
+                        <span class="flex items-center gap-2"><i data-lucide="users" class="w-3.5 h-3.5 text-indigo-400"></i> Partnership</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400"></i>
+                    </a>
+
+                    <a href="mailto:All4aim@hotmail.com?subject=General%20Inquiry%20-%204O5.com" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-slate-200 text-xs font-semibold p-3 rounded-xl transition-all flex items-center justify-between group">
+                        <span class="flex items-center gap-2"><i data-lucide="mail" class="w-3.5 h-3.5 text-amber-400"></i> General</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-slate-500 group-hover:text-blue-400"></i>
+                    </a>
+                </div>
             </div>
 
-            <!-- Success Message State (Hidden initially) -->
-            <div id="adSuccessState" class="space-y-4 text-center py-6 hidden">
-                <div class="w-12 h-12 bg-emerald-950 border border-emerald-800 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
-                    <i data-lucide="check" class="w-6 h-6"></i>
-                </div>
-                <h4 class="text-white font-bold text-base">Inquiry Received Successfully!</h4>
-                <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">Thank you! Our partnership team will review your request and reach out to your email shortly.</p>
-                <button onclick="closeAdvertiseModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-6 py-2.5 rounded-lg transition-colors">
+            <div class="pt-2 border-t border-slate-800 flex justify-end">
+                <button onclick="closeAdvertiseModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-5 py-2.5 rounded-lg transition-colors">
                     Close Window
                 </button>
             </div>
@@ -592,18 +604,6 @@
 
         window.closeAdvertiseModal = function() {
             document.getElementById('advertiseModal').classList.add('hidden');
-            document.getElementById('adFormContent').classList.remove('hidden');
-            document.getElementById('adSuccessState').classList.add('hidden');
-            document.getElementById('adName').value = '';
-            document.getElementById('adEmail').value = '';
-            document.getElementById('adMessage').value = '';
-        }
-
-        window.submitAdvertiseInquiry = function(e) {
-            e.preventDefault();
-            document.getElementById('adFormContent').classList.add('hidden');
-            document.getElementById('adSuccessState').classList.remove('hidden');
-            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         // Admin Modal Controls
@@ -630,7 +630,7 @@
                 
                 populateAnalyticsDashboard();
             } else {
-                document.getElementById('passcodeError').classList.add('hidden');
+                document.getElementById('passcodeError').classList.remove('hidden');
             }
         }
     </script>
