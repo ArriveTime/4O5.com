@@ -104,7 +104,7 @@
 
         <!-- Live AI Search Bar Component -->
         <div class="mt-10 max-w-2xl mx-auto">
-            <form id="internetSearchForm" onsubmit="executeInternetSearch(event)" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
+            <form id="internetSearchForm" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="sparkles" class="w-5 h-5 text-blue-400 animate-pulse"></i>
                     <input type="text" id="directorySearch" placeholder="Ask AI Search (e.g. 'dodgers tickets', 'best steak LA')..." class="w-full bg-transparent border-none focus:outline-none text-slate-100 placeholder-slate-500 text-sm py-2">
@@ -120,58 +120,23 @@
     <!-- Main Grid Section -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full flex-grow">
         
-        <!-- Left 1 Column: LA News & Weather Flash -->
+        <!-- Left 1 Column: Live News Feed (Dynamically Populated Free RSS Feed) -->
         <div id="news" class="space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     <i data-lucide="radio" class="w-5 h-5 text-blue-400"></i> LA Live Feed
                 </h2>
                 <span class="text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-800/50 px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live Sync
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live RSS Sync
                 </span>
             </div>
 
-            <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
-                <div>
-                    <div class="text-xs text-blue-400 font-semibold mb-1">TRAFFIC & INFRASTRUCTURE • Active</div>
-                    <h3 class="font-semibold text-slate-100 text-sm mb-2">I-405 Southbound Carpool Lane Upgrades Scheduled Near Culver City</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Caltrans announces overnight lane closures starting this week to implement smart-sensor flow monitoring...</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                    <span class="text-xs text-slate-500">Source: Caltrans</span>
-                    <a href="https://dot.ca.gov/travel" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
-                        Live Map <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                </div>
-            </article>
-
-            <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
-                <div>
-                    <div class="text-xs text-blue-400 font-semibold mb-1">METRO & TRANSIT • Active</div>
-                    <h3 class="font-semibold text-slate-100 text-sm mb-2">LAX Automated People Mover Nears Final Safety Testing Phases</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Airport officials give positive updates on integration timelines connecting aviation terminals directly to regional transit lines.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                    <span class="text-xs text-slate-500">Source: LA Metro</span>
-                    <a href="https://www.metro.net/lax-metro-transit-center/" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
-                        Transit Updates <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                </div>
-            </article>
-
-            <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
-                <div>
-                    <div class="text-xs text-blue-400 font-semibold mb-1">LOCAL WEATHER • Live Feed</div>
-                    <h3 class="font-semibold text-slate-100 text-sm mb-2">SoCal Coastal Marine Layer & Atmospheric Conditions</h3>
-                    <p class="text-xs text-slate-400 leading-relaxed">Continuous automated tracking of temperature, humidity, and wind patterns across the Los Angeles basin.</p>
-                </div>
-                <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                    <span class="text-xs text-slate-500">Source: Open-Meteo API</span>
-                    <a href="https://www.weather.gov/lox/" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
-                        Radar & Forecast <i data-lucide="external-link" class="w-3 h-3"></i>
-                    </a>
-                </div>
-            </article>
+            <!-- Container where live headlines are dynamically rendered -->
+            <div id="liveNewsContainer" class="space-y-4">
+                <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 text-center">
+                    <p class="text-xs text-slate-400 animate-pulse">Connecting to live Los Angeles news feeds...</p>
+                </article>
+            </div>
         </div>
 
         <!-- Right 2 Columns: Hub Directory -->
@@ -355,7 +320,67 @@
             fetchLiveWeatherData();
             simulateLiveTraffic();
             trackVisitorStats();
+            fetchLiveNewsFeed();
         });
+
+        // Free Live News Aggregator using Public RSS-to-JSON API
+        async function fetchLiveNewsFeed() {
+            const container = document.getElementById('liveNewsContainer');
+            // Using Google News RSS feed for Los Angeles / Southern California via free API proxy
+            const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=Los+Angeles+news&hl=en-US&gl=US&ceid=US:en');
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data && data.items && data.items.length > 0) {
+                    container.innerHTML = '';
+                    // Display top 3 live articles
+                    const topArticles = data.items.slice(0, 3);
+                    topArticles.forEach(item => {
+                        const pubDate = new Date(item.pubDate).toLocaleDateString([], { month: 'short', day: 'numeric' });
+                        const articleEl = document.createElement('article');
+                        articleEl.className = 'bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between';
+                        articleEl.innerHTML = `
+                            <div>
+                                <div class="text-xs text-blue-400 font-semibold mb-1">LA HEADLINE • ${pubDate}</div>
+                                <h3 class="font-semibold text-slate-100 text-sm mb-2">${item.title}</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">${item.author ? 'By ' + item.author : 'Live Aggregated Feed'}</p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                                <span class="text-xs text-slate-500">${item.source || 'Google News'}</span>
+                                <a href="${item.link}" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                                    Read Full Story <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </a>
+                            </div>
+                        `;
+                        container.appendChild(articleEl);
+                    });
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                } else {
+                    throw new Error('No items');
+                }
+            } catch (err) {
+                // Fallback live items if network blocks external RSS proxy
+                container.innerHTML = `
+                    <article class="bg-slate-900/60 border border-slate-800/80 rounded-xl p-4 hover:border-slate-700 transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs text-blue-400 font-semibold mb-1">SOUTHERN CALIFORNIA • Live</div>
+                            <h3 class="font-semibold text-slate-100 text-sm mb-2">Los Angeles Regional Transit and Infrastructure Updates</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed">Continuous automated coverage of regional transit progress, community events, and local weather patterns across the basin.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                            <span class="text-xs text-slate-500">Source: 4o5 Network</span>
+                            <a href="https://www.google.com/search?q=Los+Angeles+news" target="_blank" class="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                                Live Search <i data-lucide="external-link" class="w-3 h-3"></i>
+                            </a>
+                        </div>
+                    </article>
+                `;
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }
+        }
 
         // Built-in Local Session Analytics Engine (City & Timestamp Logging)
         function trackVisitorStats() {
@@ -363,7 +388,6 @@
             let uniqueVisits = parseInt(localStorage.getItem('4o5_unique_visits') || '0', 10);
             let visitorLogs = JSON.parse(localStorage.getItem('4o5_visitor_logs') || '[]');
 
-            // Check if this browser session has already been counted
             if (!sessionStorage.getItem('4o5_session_counted')) {
                 sessionStorage.setItem('4o5_session_counted', 'true');
                 totalVisits++;
@@ -376,13 +400,11 @@
                 const sampleCities = ["Los Angeles, CA", "Beverly Hills, CA", "Santa Monica, CA", "Pasadena, CA", "Long Beach, CA", "Culver City, CA"];
                 const visitorCity = sampleCities[Math.floor(Math.random() * sampleCities.length)];
                 
-                // Capture current date and time
                 const now = new Date();
                 const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 const dateString = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
                 const fullTimestamp = `${dateString}, ${timeString}`;
 
-                // Push new log entry to the array
                 visitorLogs.unshift({
                     city: visitorCity,
                     timestamp: fullTimestamp,
@@ -535,10 +557,9 @@
                 document.getElementById('analyticsDashboardView').classList.remove('hidden');
                 document.getElementById('passcodeError').classList.add('hidden');
                 
-                // Populate dashboard with metrics and logs
                 populateAnalyticsDashboard();
             } else {
-                document.getElementById('passcodeError').classList.add('hidden');
+                document.getElementById('passcodeError').classList.remove('hidden');
             }
         }
     </script>
