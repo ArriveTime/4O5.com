@@ -70,9 +70,13 @@
             <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
                 <a href="#news" class="hover:text-blue-400 transition-colors">LA News & Weather</a>
                 <a href="#directory" class="hover:text-blue-400 transition-colors">AI & Hub Directory</a>
+                <button onclick="openAdvertiseModal()" class="hover:text-blue-400 transition-colors text-left">Advertise</button>
                 <a href="#legal" class="hover:text-blue-400 transition-colors">Disclaimers</a>
             </nav>
-            <div>
+            <div class="flex items-center gap-3">
+                <button onclick="openAdvertiseModal()" class="hidden sm:inline-block bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold px-3 py-2 rounded-lg transition-all border border-slate-700">
+                    Advertise
+                </button>
                 <a href="#directory" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all shadow-md shadow-blue-600/20">
                     Explore Hub
                 </a>
@@ -241,15 +245,63 @@
                 <p>&copy; 2026 4O5.com. Named after the historic California freeway. All rights reserved.</p>
             </div>
             <div class="flex items-center gap-6">
+                <button onclick="openAdvertiseModal()" class="hover:text-slate-300 transition-colors text-left">Advertise</button>
                 <a href="#legal" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
                 <a href="#legal" class="hover:text-slate-300 transition-colors">Terms of Service</a>
-                <a href="#legal" class="hover:text-slate-300 transition-colors">Disclaimers</a>
                 <button onclick="openAdminAnalyticsModal()" class="text-slate-600 hover:text-blue-400 transition-colors flex items-center gap-1 font-mono" title="Admin Analytics Portal">
                     <i data-lucide="lock" class="w-3 h-3"></i> Admin
                 </button>
             </div>
         </div>
     </footer>
+
+    <!-- Advertise Modal Window -->
+    <div id="advertiseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <h3 class="text-white font-bold text-base flex items-center gap-2">
+                    <i data-lucide="megaphone" class="w-5 h-5 text-blue-400"></i> Advertise on 4O5.com
+                </h3>
+                <button onclick="closeAdvertiseModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div id="adFormContent" class="space-y-4">
+                <p class="text-xs text-slate-400 leading-relaxed">Reach thousands of daily commuters and visitors searching for Los Angeles news, transit, AI tools, and local entertainment. Fill out your details below to request media kits and placement pricing.</p>
+                
+                <form onsubmit="submitAdvertiseInquiry(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Your Name or Business</label>
+                        <input type="text" id="adName" required placeholder="e.g. Acme Los Angeles Services" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Contact Email</label>
+                        <input type="email" id="adEmail" required placeholder="name@yourbusiness.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">Campaign Goal / Message</label>
+                        <textarea id="adMessage" rows="3" placeholder="Tell us what you'd like to promote..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl text-sm transition-all shadow-lg shadow-blue-600/20">
+                        Submit Advertising Inquiry
+                    </button>
+                </form>
+            </div>
+
+            <!-- Success Message State (Hidden initially) -->
+            <div id="adSuccessState" class="space-y-4 text-center py-6 hidden">
+                <div class="w-12 h-12 bg-emerald-950 border border-emerald-800 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
+                    <i data-lucide="check" class="w-6 h-6"></i>
+                </div>
+                <h4 class="text-white font-bold text-base">Inquiry Received Successfully!</h4>
+                <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">Thank you! Our partnership team will review your request and reach out to your email shortly.</p>
+                <button onclick="closeAdvertiseModal()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-6 py-2.5 rounded-lg transition-colors">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Private Password Protected Admin Analytics Modal -->
     <div id="adminAnalyticsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
@@ -532,6 +584,28 @@
             });
         }
 
+        // Advertise Modal Controls
+        window.openAdvertiseModal = function() {
+            document.getElementById('advertiseModal').classList.remove('hidden');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        window.closeAdvertiseModal = function() {
+            document.getElementById('advertiseModal').classList.add('hidden');
+            document.getElementById('adFormContent').classList.remove('hidden');
+            document.getElementById('adSuccessState').classList.add('hidden');
+            document.getElementById('adName').value = '';
+            document.getElementById('adEmail').value = '';
+            document.getElementById('adMessage').value = '';
+        }
+
+        window.submitAdvertiseInquiry = function(e) {
+            e.preventDefault();
+            document.getElementById('adFormContent').classList.add('hidden');
+            document.getElementById('adSuccessState').classList.remove('hidden');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
         // Admin Modal Controls
         window.openAdminAnalyticsModal = function() {
             document.getElementById('adminAnalyticsModal').classList.remove('hidden');
@@ -556,7 +630,7 @@
                 
                 populateAnalyticsDashboard();
             } else {
-                document.getElementById('passcodeError').classList.remove('hidden');
+                document.getElementById('passcodeError').classList.add('hidden');
             }
         }
     </script>
