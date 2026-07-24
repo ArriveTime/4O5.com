@@ -64,7 +64,7 @@
                     4O5<span class="text-purple-200">.com</span>
                 </div>
                 <span class="text-xs uppercase tracking-widest text-slate-400 font-semibold hidden sm:inline-block border-l border-slate-700 pl-3">
-                    LA's News & AI Gateway
+                    LA's News AI Gateway
                 </span>
             </div>
             <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
@@ -96,9 +96,9 @@
         <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-4xl mx-auto mb-3">
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">AI Gateway</span>
         </h2>
-        <h2 class="text-4xl sm:text-6xl font-black tracking-tight text-slate-100 max-w-4xl mx-auto mb-6">
-            4O5<span class="text-blue-400">.com</span>
-        </h2>
+        <div class="inline-block bg-gradient-to-tr from-purple-600 to-indigo-600 text-white font-black text-4xl sm:text-6xl px-4 py-2 rounded-2xl shadow-xl shadow-purple-500/20 tracking-wider border border-purple-400/50 mb-6">
+            4O5<span class="text-purple-200">.com</span>
+        </div>
         
         <!-- Descriptive Subtitle (Double Font Size) -->
         <p class="mt-4 text-lg sm:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10">
@@ -106,7 +106,7 @@
         </p>
 
         <!-- Live AI Search Bar Component -->
-        <div class="max-w-2xl mx-auto">
+        <div class="max-w-2xl mx-auto mb-16">
             <form id="internetSearchForm" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="sparkles" class="w-5 h-5 text-blue-400 animate-pulse"></i>
@@ -116,21 +116,10 @@
                     Live AI Search
                 </button>
             </form>
-            
-            <!-- Powered by Live AI Badge -->
-            <div class="mt-4">
-                <p class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300 text-sm font-semibold shadow-lg">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i> Powered by Live AI
-                </p>
-            </div>
         </div>
-    </section>
 
-    <!-- Main Grid Section -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full flex-grow">
-        
-        <!-- Left 1 Column: Live News Feed -->
-        <div id="news" class="space-y-6">
+        <!-- Moved LA Live Feed Directly Under Search -->
+        <div id="news" class="max-w-4xl mx-auto text-left space-y-6 pt-4 border-t border-slate-800/80">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     <i data-lucide="radio" class="w-5 h-5 text-blue-400"></i> LA Live Feed
@@ -147,9 +136,13 @@
                 </article>
             </div>
         </div>
+    </section>
 
-        <!-- Right 2 Columns: Hub Directory -->
-        <div id="directory" class="lg:col-span-2 space-y-6">
+    <!-- Main Grid Section (Hub Directory) -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full flex-grow">
+        
+        <!-- Hub Directory Full Section -->
+        <div id="directory" class="space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-800 pb-4 gap-4">
                 <h2 class="text-lg font-bold text-white flex items-center gap-2">
                     <i data-lucide="cpu" class="w-5 h-5 text-indigo-400"></i> AI Hub Directory & Feeds
@@ -165,7 +158,7 @@
             </div>
 
             <!-- Directory Grid -->
-            <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general" data-keywords="openai gpt-4o general ai free option chatbot model language">
                     <div>
                         <div class="flex items-center justify-between mb-3">
