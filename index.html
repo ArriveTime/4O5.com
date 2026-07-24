@@ -93,21 +93,17 @@
         <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-4xl mx-auto mb-3">
             LA's News & <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">AI Gateway</span>
         </h1>
-        <h2 class="text-4xl sm:text-6xl font-black tracking-tight text-slate-100 max-w-4xl mx-auto mb-4">
+        <h2 class="text-4xl sm:text-6xl font-black tracking-tight text-slate-100 max-w-4xl mx-auto mb-6">
             4O5<span class="text-blue-400">.com</span>
         </h2>
-        <div class="mb-6">
-            <p class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300 text-sm font-semibold shadow-lg">
-                <i data-lucide="sparkles" class="w-4 h-4"></i> Powered by Autonomous AI Aggregation
-            </p>
-        </div>
         
-        <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+        <!-- Moved up and text size doubled (text-lg sm:text-2xl) -->
+        <p class="mt-4 text-lg sm:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10">
             Named after the nation's busiest corridor. Real-time Southern California updates combined with the ultimate directory for AI, sports, tickets, dining, and entertainment.
         </p>
 
         <!-- Live AI Search Bar Component -->
-        <div class="mt-10 max-w-2xl mx-auto">
+        <div class="max-w-2xl mx-auto">
             <form id="internetSearchForm" class="flex flex-col sm:flex-row gap-2 p-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
                 <div class="flex items-center gap-2 px-3 flex-1">
                     <i data-lucide="sparkles" class="w-5 h-5 text-blue-400 animate-pulse"></i>
@@ -117,6 +113,13 @@
                     Live AI Search
                 </button>
             </form>
+            
+            <!-- Moved below the search engine and changed text to "Powered by Live AI" -->
+            <div class="mt-4">
+                <p class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/80 border border-blue-800 text-blue-300 text-sm font-semibold shadow-lg">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Powered by Live AI
+                </p>
+            </div>
             <p id="searchStatus" class="text-xs text-slate-500 mt-2">Autonomous AI Gateway: Local filter + Live AI Search Active</p>
         </div>
     </section>
