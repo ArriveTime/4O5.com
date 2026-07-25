@@ -160,7 +160,7 @@
                 </div>
             </div>
 
-            <!-- Directory Grid (Sports, Tickets, Dining, Entertainment moved up; General AI / Legal moved down) -->
+            <!-- Directory Grid -->
             <div id="toolGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 
                 <!-- Sports Card -->
@@ -303,7 +303,7 @@
                     </div>
                 </div>
 
-                <!-- General AI & Legal Options (Moved to Bottom) -->
+                <!-- General AI & Legal Options -->
                 <div class="tool-card bg-slate-900/60 border border-slate-800 rounded-xl p-5 flex flex-col justify-between hover:border-blue-500/50 transition-all group" data-category="general" data-keywords="openai gpt-4o general ai free option chatbot model language">
                     <div>
                         <div class="flex items-center justify-between mb-3">
@@ -406,7 +406,7 @@
                     </div>
                 </div>
 
-                <!-- Added Custom Ad Card (YOUR AD HERE TEXT 480-269-2272) with Updated Layout -->
+                <!-- Custom Ad Card with Updated Layout -->
                 <div class="tool-card bg-yellow-400 border border-yellow-500 rounded-xl p-5 flex flex-col justify-between shadow-lg transition-all group text-slate-950" data-category="general" data-keywords="ad advertising your ad here 480-269-2272">
                     <div>
                         <div class="flex items-center justify-between mb-3">
@@ -449,7 +449,7 @@
         </div>
     </footer>
 
-    <!-- Advertise Modal Window with Direct Email Instructions & Category Buttons -->
+    <!-- Advertise Modal Window -->
     <div id="advertiseModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-6">
             <div class="flex items-center justify-between border-b border-slate-800 pb-4">
@@ -466,7 +466,6 @@
                     Please email all advertising, investor, and partnership inquiries directly to:
                 </p>
                 
-                <!-- Highlighted Email Box with Capitalized ALL4aim -->
                 <div class="bg-slate-950 border border-blue-500/40 rounded-xl p-3 text-center">
                     <a href="mailto:ALL4aim@hotmail.com?subject=Advertising%20Inquiry%20-%204O5.com" class="text-blue-400 hover:text-blue-300 font-mono font-bold text-sm tracking-wide">
                         ALL4aim@hotmail.com
@@ -477,7 +476,6 @@
                     Or select a category below to automatically open your email app with a pre-formatted subject line:
                 </p>
 
-                <!-- Category Quick-Action Mailto Buttons -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                     <a href="mailto:ALL4aim@hotmail.com?subject=Advertising%20Inquiry%20-%204O5.com" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-blue-500/50 text-slate-200 text-xs font-semibold p-3 rounded-xl transition-all flex items-center justify-between group">
                         <span class="flex items-center gap-2"><i data-lucide="tag" class="w-3.5 h-3.5 text-blue-400"></i> Advertising</span>
@@ -568,8 +566,8 @@
 
     <!-- Frontend Core Scripts -->
     <script>
-        // Cloud Analytics Configuration (JSONBin)
-        const BIN_ID = 'PASTE_YOUR_BIN_ID_HERE'; // <-- Remember to replace with your actual JSONBin Bin ID
+        // Configured with your real JSONBin Bin ID
+        const BIN_ID = '6a64f65eda38895dfe8f091d';
         const API_KEY = '$2a$10$d8VhSVOwJ0bAUAS.ASA22uCQaRUuKs/gYpeVM9aEhPVmv/doXxjly';
         const GEO_API = 'https://ipapi.co/json/';
 
@@ -822,10 +820,9 @@
                 document.getElementById('passcodeError').classList.add('hidden');
                 
                 loadCloudVisitorData();
-                // Auto-refresh stats every 10 seconds while admin dashboard is open
                 window.adminPollInterval = setInterval(loadCloudVisitorData, 10000);
             } else {
-                document.getElementById('passcodeError').classList.add('hidden');
+                document.getElementById('passcodeError').classList.remove('hidden');
             }
         }
     </script>
